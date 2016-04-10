@@ -4,7 +4,7 @@
     <%= form.field_container :title do %>
       <div class="form-group">
         <%= form.label :title, Spree.t(:title) %> <span class="text-danger">*</span><br />
-        <%= form.text_field :title, :class => 'form-control' %>
+        <%= form.text_area :title, :class => 'form-control' %>
         <%= form.error_message_on :title %>
       </div>
     <% end %>
