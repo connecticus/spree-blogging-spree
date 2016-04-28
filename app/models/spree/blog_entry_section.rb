@@ -10,4 +10,21 @@ class Spree::BlogEntrySection < ActiveRecord::Base
   has_many :vae_products, -> { order(position: :asc) }, :dependent => :destroy
   accepts_nested_attributes_for :vae_products, :reject_if => :all_blank, :allow_destroy => true
 
+  def self.icon_set(layout)
+    case layout
+    when 'text'
+      ['align-justify']
+    when 'text_and_image'
+      ['align-justify', 'products']
+    when 'image_and_text'
+      ['products', 'align-justify']
+    when 'pull_quote'
+      ['star']
+    when 'image_gallery'
+      ['products']
+    when 'product_collection'
+      ['products']
+    end
+  end
+
 end

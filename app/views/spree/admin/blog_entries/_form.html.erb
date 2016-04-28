@@ -136,7 +136,12 @@
     <% end %>
     <div class="col-sm-12">
       <% Spree::BlogEntrySection.layouts.each do |layout| %>
-        <%= link_to_add_association "Add #{layout[0].titleize} Section", form, :blog_entry_sections, partial: "blog_entry_section_#{layout[0]}_fields" %>
+        <%= link_to_add_association form, :blog_entry_sections, { partial: "blog_entry_section_#{layout[0]}_fields", class: "btn btn-default #{layout[0]}" } do %>
+          <% Spree::BlogEntrySection.icon_set(layout[0]).each do |icon_name| %>
+            <span class="icon icon-<%= icon_name %>"></span>
+          <% end %>
+          Add <%= layout[0].titleize %> Section
+        <% end %>
         <br>
       <% end %>
     </div>
