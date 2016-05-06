@@ -16,6 +16,7 @@ module Spree
         @blog_entry = Spree::BlogEntry.visible.find_by_permalink!(params[:slug])
       end
       @title = @blog_entry.title
+      @more_blog_entries = Spree::BlogEntry.visible.published_after(@blog_entry.published_at).limit(9)
     end
 
     def tag

@@ -9,6 +9,7 @@ class Spree::BlogEntry < ActiveRecord::Base
   default_scope { order("published_at DESC") }
   scope :visible, -> { where :visible => true }
   scope :recent, lambda{|max=5| visible.limit(max) }
+  scope :published_after, ->(a){ where("published_at < ?", a) }
 
   if Spree.user_class
     belongs_to :author, :class_name => Spree.user_class.to_s
