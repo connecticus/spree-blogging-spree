@@ -24,6 +24,19 @@ json.set! :blog_entry do
       json.vae_products section.vae_products.map(&:vae_product_id)
     end
   end
+
+  json.more_blog_entries do
+    json.array!(@more_blog_entries) do |blog_entry|
+      json.title blog_entry.title
+      json.main_image blog_entry.blog_entry_image ? asset_url(blog_entry.blog_entry_image.attachment.url(:large)) : nil
+      json.subtitle blog_entry.subtitle
+      json.byline blog_entry.byline
+      json.permalink blog_entry.permalink
+      json.visible blog_entry.visible
+      json.published_at blog_entry.published_at
+      json.summary blog_entry.summary
+    end
+  end
 end
 
 json.set! :meta do
