@@ -24,6 +24,10 @@ module Spree
       @tag_name = params[:tag]
     end
 
+    def categories
+      @categories = Spree::BlogEntry.category_counts
+    end
+
     def category
       @blog_entries = Spree::BlogEntry.visible.by_category(params[:category]).page(@pagination_page).per(@pagination_per_page)
       @category_name = params[:category]
