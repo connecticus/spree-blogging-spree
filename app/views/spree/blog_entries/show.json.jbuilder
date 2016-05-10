@@ -25,6 +25,24 @@ json.set! :blog_entry do
     end
   end
 
+  if @previous_blog_entry.present?
+    json.previous_blog_entry do
+      json.title @previous_blog_entry.title
+      json.permalink @previous_blog_entry.permalink
+    end
+  else
+    json.previous_blog_entry nil
+  end
+
+  if @next_blog_entry.present?
+    json.next_blog_entry do
+      json.title @next_blog_entry.title
+      json.permalink @next_blog_entry.permalink
+    end
+  else
+    json.next_blog_entry nil
+  end
+
   json.more_blog_entries do
     json.array!(@more_blog_entries) do |blog_entry|
       json.title blog_entry.title
