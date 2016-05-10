@@ -12,7 +12,6 @@ nbproject
 pkg
 *.swp
 spec/dummy
-
 *.sublime*
 
 .bundle

@@ -35,6 +35,7 @@ json.set! :blog_entry do
       json.visible blog_entry.visible
       json.published_at blog_entry.published_at
       json.summary blog_entry.summary
+      json.categories @blog_entry.categories
     end
   end
 end
