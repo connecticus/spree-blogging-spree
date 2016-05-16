@@ -1,0 +1,30 @@
+<div class="nested-fields sortable">
+  <%= f.hidden_field :layout, value: 'text_and_image' %>
+  <%= f.hidden_field :position, class: 'position' %>
+
+  <div class="col-sm-12">
+    <div class="sort-handle collapse-show"><i class="icon icon-move"></i></div>
+    <h4>Text &amp; Image</h4>
+  </div>
+
+  <div class="col-sm-6 collapse-hide">
+    <div class="form-group">
+      <%= f.cktext_area :body, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="col-sm-6 collapse-hide">
+    <%= f.fields_for :blog_entry_section_images do |besi| %>
+      <%= render "blog_entry_section_image_fields", f: besi %>
+    <% end %>
+    <div>
+      <%= link_to_add_association "Add Image", f, :blog_entry_section_images %>
+    </div>
+  </div>
+
+  <div class="col-sm-12 collapse-hide">
+    <%= link_to_remove_association "Remove Section", f %>
+  </div>
+
+  <div class="col-sm-12 clearfix bottom-border"></div>
+</div>

@@ -1,0 +1,39 @@
+<div class="nested-fields sortable product-collection-section">
+  <%= f.hidden_field :layout, value: 'product_collection' %>
+  <%= f.hidden_field :position, class: 'position' %>
+
+  <div class="col-sm-12">
+    <div class="sort-handle collapse-show"><i class="icon icon-move"></i></div>
+    <h4>Product Collection</h4>
+  </div>
+
+  <div class="col-sm-12 collapse-hide">
+    <div class="form-group">
+      <%= f.label :body, "Product CTA" %>
+      <%= f.text_field :body, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="col-sm-6 collapse-hide">
+    <div class="form-group">
+      <label>Product Search:</label>
+      <input class="ajax-product-search">
+    </div>
+    <div class="ajax-product-return"></div>
+  </div>
+
+  <div class="col-sm-6 saved-products collapse-hide">
+    <%= f.fields_for :vae_products do |vp| %>
+      <%= render "vae_product_fields", f: vp %>
+    <% end %>
+    <div class="hidden add-vae-product">
+      <%= link_to_add_association "Add Vae Product", f, :vae_products %>
+    </div>
+  </div>
+
+  <div class="col-sm-12 collapse-hide">
+    <%= link_to_remove_association "Remove Section", f %>
+  </div>
+
+  <div class="col-sm-12 clearfix bottom-border"></div>
+</div>

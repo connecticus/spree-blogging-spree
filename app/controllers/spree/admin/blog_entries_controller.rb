@@ -1,6 +1,12 @@
+require 'open-uri'
+
 class Spree::Admin::BlogEntriesController < Spree::Admin::ResourceController
   helper 'spree/blog_entries'
 
+  def product_search
+    @results = Hash.from_xml(open("http://saturdaysnyc.vaesite.com/feed/search.xml?paginate=10&s=#{params[:s]}"))
+    render json: @results["rss"]["channel"]["a"]
+  end
 
   private
 

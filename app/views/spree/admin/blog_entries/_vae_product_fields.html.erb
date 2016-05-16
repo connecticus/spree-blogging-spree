@@ -1,0 +1,15 @@
+<div class="nested-fields sortable-product">
+  <%= f.hidden_field :position, class: 'product-position' %>
+  <%= f.hidden_field :vae_product_id, class: 'vae_product_id' %>
+  <%= f.hidden_field :name, class: 'vae_product_name' %>
+  <%= f.hidden_field :img_src, class: 'vae_product_img_src' %>
+
+  <img src="<%= f.object.img_src %>" class="vae_product_img">
+
+  <p class="vae_product_name">
+    <%= f.object.name %>
+  </p>
+
+  <%= link_to_remove_association "Remove Product", f %>
+  <hr>
+</div>

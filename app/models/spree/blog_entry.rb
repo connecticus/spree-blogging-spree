@@ -5,11 +5,12 @@ class Spree::BlogEntry < ActiveRecord::Base
   before_save :create_permalink
   before_save :set_published_at
   validates_presence_of :title
-  validates_presence_of :body
 
   default_scope { order("published_at DESC") }
   scope :visible, -> { where :visible => true }
   scope :recent, lambda{|max=5| visible.limit(max) }
+  scope :published_before, ->(a){ where("published_at > ?", a) }
+  scope :published_after, ->(a){ where("published_at < ?", a) }
 
   if Spree.user_class
     belongs_to :author, :class_name => Spree.user_class.to_s
@@ -19,6 +20,9 @@ class Spree::BlogEntry < ActiveRecord::Base
 
   has_one :blog_entry_image, :as => :viewable, :dependent => :destroy, :class_name => 'Spree::BlogEntryImage'
   accepts_nested_attributes_for :blog_entry_image, :reject_if => :all_blank
+
+  has_many :blog_entry_sections, -> { order(position: :asc) }, :dependent => :destroy
+  accepts_nested_attributes_for :blog_entry_sections, :reject_if => :all_blank, :allow_destroy => true
 
   def entry_summary(chars=200)
     if summary.blank?
@@ -62,6 +66,14 @@ class Spree::BlogEntry < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def get_seo_title
+    self.seo_title.present? ? self.seo_title : self.title
+  end
+
+  def get_seo_description
+    self.seo_description.present? ? self.seo_description : self.summary
   end
 
   private
