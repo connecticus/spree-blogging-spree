@@ -2,6 +2,7 @@ json.set! :blog_entries do
   json.array!(@blog_entries) do |blog_entry|
     json.title blog_entry.title
     json.main_image blog_entry.blog_entry_image ? asset_url(blog_entry.blog_entry_image.attachment.url(:large)) : nil
+    json.main_image_alt_text blog_entry.blog_entry_image ? blog_entry.blog_entry_image.alt : nil
     json.subtitle blog_entry.subtitle
     json.byline blog_entry.byline
     json.permalink blog_entry.permalink
@@ -20,6 +21,7 @@ json.set! :blog_entries do
           json.array!(section.blog_entry_section_images) do |image|
             json.position image.position
             json.image_url asset_url(image.attachment.url(:large))
+            json.alt_text image.alt
           end
         end
         json.vae_products section.vae_products.map(&:vae_product_id)
