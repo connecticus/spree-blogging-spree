@@ -17,8 +17,8 @@ module Spree
       end
       @title = @blog_entry.title
       @more_blog_entries = Spree::BlogEntry.visible.published_after(@blog_entry.published_at).limit(9)
-      @previous_blog_entry = @more_blog_entries.first || Spree::BlogEntry.visible.last
-      @next_blog_entry = Spree::BlogEntry.visible.published_before(@blog_entry.published_at).first || Spree::BlogEntry.visible.first
+      @previous_blog_entry = @more_blog_entries.first || Spree::BlogEntry.visible.first
+      @next_blog_entry = Spree::BlogEntry.visible.published_before(@blog_entry.published_at).first || Spree::BlogEntry.visible.last
     end
 
     def tag
