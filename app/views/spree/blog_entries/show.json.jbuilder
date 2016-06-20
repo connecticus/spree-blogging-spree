@@ -21,6 +21,7 @@ json.set! :blog_entry do
         json.array!(section.blog_entry_section_images) do |image|
           json.position image.position
           json.image_url asset_url(image.attachment.url(:section))
+          json.cover_image_url asset_url(image.attachment.url(:cover))
           json.alt_text image.alt
         end
       end
