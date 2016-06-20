@@ -14,6 +14,13 @@
   </div>
 
   <div class="col-sm-12 collapse-hide">
+    <div class="form-group collection_radio_buttons">
+      <%= f.label :text_column_count, "Columns:" %>
+      <%= f.collection_radio_buttons :text_column_count, [[1,1], [2,2]], :first, :last, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="col-sm-12 collapse-hide">
     <%= link_to_remove_association "Remove Section", f %>
   </div>
 
