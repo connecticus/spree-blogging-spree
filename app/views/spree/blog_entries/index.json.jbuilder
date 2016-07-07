@@ -10,7 +10,7 @@ json.set! :blog_entries do
     json.visible blog_entry.visible
     json.published_at blog_entry.published_at
     json.summary blog_entry.summary
-    json.categories blog_entry.category_list
+    json.categories blog_entry.categories
     json.seo_title blog_entry.get_seo_title
     json.seo_description blog_entry.get_seo_description
 
