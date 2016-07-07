@@ -17,7 +17,7 @@ json.set! :blog_entries do
     json.sections do
       json.array!(blog_entry.blog_entry_sections) do |section|
         json.layout section.layout
-        json.body section.body
+        json.body section.body.markdown_to_html if section.body.present?
         json.body_column_count section.text_column_count
         json.blog_entry_section_images do
           json.array!(section.blog_entry_section_images) do |image|
