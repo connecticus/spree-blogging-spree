@@ -29,11 +29,11 @@ module Spree
       "<br><br>The article #{link_to blog_entry.title, blog_entry_url_permalink(blog_entry)} first appeared on #{link_to "#{Spree::Config[:site_name]} Blog", blog_url}."
     end
 
-    def blog_entry_tag_list_html blog_entry
+    def blog_entry_tag_list_html(blog_entry)
       blog_entry.tag_list.map {|tag| link_to tag, blog_tag_path(tag) }.join(", ").html_safe
     end
 
-    def blog_entry_category_list_html blog_entry
+    def blog_entry_category_list_html(blog_entry)
       blog_entry.category_list.map {|category| link_to category, blog_category_path(category) }.join(", ").html_safe
     end
 
@@ -44,6 +44,10 @@ module Spree
         index = ((tag.count / max_count) * (classes.size - 1))
         yield tag, classes[index.nan? ? 0 : index.round]
       end
+    end
+
+    def markdown(source)
+      source.markdown_to_html rescue ''
     end
   end
 end

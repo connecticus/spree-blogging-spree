@@ -5,11 +5,11 @@ json.set! :blog_entries do
     json.grid_image_url blog_entry.blog_entry_image ? asset_url(blog_entry.blog_entry_image.attachment.url(:grid)) : nil
     json.alt_text blog_entry.blog_entry_image ? blog_entry.blog_entry_image.alt : nil
     json.subtitle blog_entry.subtitle
-    json.byline blog_entry.byline
+    json.byline markdown(blog_entry.byline)
     json.permalink blog_entry.permalink
     json.visible blog_entry.visible
     json.published_at blog_entry.published_at
-    json.summary blog_entry.summary
+    json.summary markdown(blog_entry.summary)
     json.categories blog_entry.category_list
     json.seo_title blog_entry.get_seo_title
     json.seo_description blog_entry.get_seo_description
@@ -17,7 +17,7 @@ json.set! :blog_entries do
     json.sections do
       json.array!(blog_entry.blog_entry_sections) do |section|
         json.layout section.layout
-        json.body section.body.markdown_to_html if section.body.present?
+        json.body markdown(section.body)
         json.body_column_count section.text_column_count
         json.blog_entry_section_images do
           json.array!(section.blog_entry_section_images) do |image|
