@@ -8,6 +8,7 @@ json.set! :blog_entries do
     json.byline markdown(blog_entry.byline)
     json.permalink blog_entry.permalink
     json.visible blog_entry.visible
+    json.visible_stg blog_entry.visible_stg
     json.published_at blog_entry.published_at
     json.summary markdown(blog_entry.summary)
     json.categories blog_entry.category_list
