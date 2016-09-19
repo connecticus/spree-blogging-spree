@@ -1,5 +1,5 @@
 class Spree::BlogEntrySection < ActiveRecord::Base
-  enum layout: [ :text, :text_and_image, :image_and_text, :pull_quote, :image_gallery, :image_slideshow, :product_collection ]
+  enum layout: [ :text, :text_and_image, :image_and_text, :image_row, :pull_quote, :image_gallery, :image_slideshow, :product_collection ]
 
   belongs_to :blog_entry
   acts_as_list scope: :blog_entry
@@ -18,6 +18,8 @@ class Spree::BlogEntrySection < ActiveRecord::Base
       ['align-justify', 'products']
     when 'image_and_text'
       ['products', 'align-justify']
+    when 'image_row'
+      ['picture']
     when 'pull_quote'
       ['star']
     when 'image_gallery'
