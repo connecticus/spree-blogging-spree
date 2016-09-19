@@ -9,6 +9,10 @@ module Spree
       @blog_entries = Spree::BlogEntry.visible.page(@pagination_page).per(@pagination_per_page)
     end
 
+    def index_stg
+      @blog_entries = Spree::BlogEntry.visible_stg.page(@pagination_page).per(@pagination_per_page)
+    end
+
     def show
       if try_spree_current_user.try(:has_spree_role?, "admin")
         @blog_entry = Spree::BlogEntry.find_by_permalink!(params[:slug])
