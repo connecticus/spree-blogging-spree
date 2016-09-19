@@ -29,7 +29,8 @@ en:
     summary: Summary
     permalink: Permalink
     published_at: Published at
-    visible: Visible
+    visible: Prod
+    visible_stg: Stg
     subtitle: Subtitle
     byline: Byline
     author_id: Author
