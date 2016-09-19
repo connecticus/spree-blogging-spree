@@ -7,6 +7,7 @@ module Spree
 
     def index
       @blog_entries = Spree::BlogEntry.visible.page(@pagination_page).per(@pagination_per_page)
+      @blog_entries_stg = Spree::BlogEntry.visible_stg.page(@pagination_page).per(@pagination_per_page)
     end
 
     def index_stg
