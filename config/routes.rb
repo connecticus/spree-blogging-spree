@@ -15,7 +15,6 @@ Spree::Core::Engine.routes.draw do
       constraints: {year: /(19|20)\d{2}/, month: /[01]?\d/, day: /[0-3]?\d/}
     get '/feed' => 'blog_entries#feed', as: :feed, format: :rss
     get '/' => 'blog_entries#index'
-    get '/stg' => 'blog_entries#index_stg'
   end
 end
 
