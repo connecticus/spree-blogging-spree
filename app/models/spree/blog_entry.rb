@@ -45,11 +45,13 @@ class Spree::BlogEntry < ActiveRecord::Base
   end
 
   def self.by_tag(tag_name)
-    tagged_with(tag_name, :on => :tags)
+    unparameterized_name = tag_name.split("-").join(" ").humanize
+    tagged_with(unparameterized_name, :on => :tags)
   end
 
   def self.by_category(category_name)
-    tagged_with(category_name, :on => :categories)
+    unparameterized_name = category_name.split("-").join(" ").humanize
+    tagged_with(unparameterized_name, :on => :categories)
   end
 
   def self.by_author(author)
