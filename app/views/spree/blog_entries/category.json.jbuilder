@@ -11,7 +11,7 @@ json.set! :blog_entries do
     json.visible_stg blog_entry.visible_stg
     json.published_at blog_entry.published_at
     json.summary markdown(blog_entry.summary)
-    json.categories blog_entry.category_list
+    json.categories blog_entry.categories
     json.seo_title blog_entry.get_seo_title
     json.seo_description blog_entry.get_seo_description
 
