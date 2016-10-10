@@ -35,4 +35,5 @@ end
 
 json.set! :meta do
   json.code response.status
+  json.category @category_name
 end
