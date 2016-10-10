@@ -35,9 +35,5 @@ end
 
 json.set! :meta do
   json.code response.status
-  json.set! :category do
-    json.array!(@category_object) do |category|
-      json.name category.name
-    end
-  end
+  json.category @category_object.first
 end
