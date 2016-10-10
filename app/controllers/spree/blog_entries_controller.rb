@@ -37,6 +37,8 @@ module Spree
     def category
       @blog_entries = Spree::BlogEntry.visible.by_category(params[:category]).page(@pagination_page).per(@pagination_per_page)
       @category_name = params[:category]
+      unparameterized_name = @category_name.split("-").join(" ").humanize
+      @category_object = ActsAsTaggableOn::Tag.named_like(unparameterized_name)
     end
 
     def archive
