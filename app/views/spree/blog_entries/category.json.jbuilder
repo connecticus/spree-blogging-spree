@@ -36,4 +36,5 @@ end
 json.set! :meta do
   json.code response.status
   json.category @category_object.first
+  json.has_more_pages @has_more_pages
 end

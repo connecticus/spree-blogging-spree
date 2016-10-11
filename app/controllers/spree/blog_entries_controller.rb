@@ -8,9 +8,21 @@ module Spree
     def index
       if (params[:env] == 'stg')
         @blog_entries = Spree::BlogEntry.visible_stg.page(@pagination_page).per(@pagination_per_page)
+
+        # pagination
+        next_page_count = Spree::BlogEntry.visible_stg.page(@pagination_page+1).per(@pagination_per_page).count
+        has_more = (next_page_count > 0 ? true : false)
+     
       else
         @blog_entries = Spree::BlogEntry.visible.page(@pagination_page).per(@pagination_per_page)
+        
+        # pagination
+        next_page_count = Spree::BlogEntry.visible.page(@pagination_page+1).per(@pagination_per_page).count
+        has_more = (next_page_count > 0 ? true : false)
+     
       end
+
+       @has_more_pages = has_more
     end
 
     def show
@@ -35,10 +47,23 @@ module Spree
     end
 
     def category
-      @blog_entries = Spree::BlogEntry.visible.by_category(params[:category]).page(@pagination_page).per(@pagination_per_page)
+      if (params[:env] == 'stg')
+        @blog_entries = Spree::BlogEntry.visible_stg.by_category(params[:category]).page(@pagination_page).per(@pagination_per_page)
+        # pagination
+        next_page_count = Spree::BlogEntry.visible_stg.by_category(params[:category]).page(@pagination_page+1).per(@pagination_per_page).count
+        has_more = (next_page_count > 0 ? true : false)
+      else
+        @blog_entries = Spree::BlogEntry.visible.by_category(params[:category]).page(@pagination_page).per(@pagination_per_page)
+        # pagination
+        next_page_count = Spree::BlogEntry.visible.by_category(params[:category]).page(@pagination_page+1).per(@pagination_per_page).count
+        has_more = (next_page_count > 0 ? true : false)
+      end
+
       @category_name = params[:category]
       unparameterized_name = @category_name.split("-").join(" ").humanize
       @category_object = ActsAsTaggableOn::Tag.named_like(unparameterized_name)
+      
+      @has_more_pages = has_more
     end
 
     def archive

@@ -35,4 +35,5 @@ end
 
 json.set! :meta do
   json.code response.status
+  json.has_more_pages @has_more_pages
 end
