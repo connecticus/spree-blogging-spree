@@ -7,7 +7,7 @@ class Spree::BlogEntry < ActiveRecord::Base
   validates_presence_of :title
 
   default_scope { order("published_at DESC") }
-  scope :visible, -> { where :visible => true }
+  scope :visible_prod, -> { where :visible => true }
   scope :visible_stg, -> { where :visible_stg => true }
   scope :recent, lambda{|max=5| visible.limit(max) }
   scope :published_before, ->(a){ where("published_at > ?", a) }
@@ -30,6 +30,15 @@ class Spree::BlogEntry < ActiveRecord::Base
       "#{body[0...chars]}..."
     else
       summary
+    end
+  end
+
+  #scope visibility based on env param in request
+  def self.visible(env = 'prod') 
+    if (env == 'stg')
+      self.visible_stg
+    else
+      self.visible_prod
     end
   end
 

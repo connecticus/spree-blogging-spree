@@ -6,23 +6,21 @@ module Spree
     rescue_from ActiveRecord::RecordNotFound, :with => :render_404
 
     def index
-      if (params[:env] == 'stg')
-        @blog_entries = Spree::BlogEntry.visible_stg.page(@pagination_page).per(@pagination_per_page)
 
-        # pagination
-        next_page_count = Spree::BlogEntry.visible_stg.page(@pagination_page+1).per(@pagination_per_page).count
-        has_more = (next_page_count > 0 ? true : false)
-     
-      else
-        @blog_entries = Spree::BlogEntry.visible.page(@pagination_page).per(@pagination_per_page)
-        
-        # pagination
-        next_page_count = Spree::BlogEntry.visible.page(@pagination_page+1).per(@pagination_per_page).count
-        has_more = (next_page_count > 0 ? true : false)
-     
-      end
+      #the posts - pagination must be by 9 for correct page layout  
+      blog_entries = Spree::BlogEntry.where(
+        :id => Spree::BlogEntry.visible(params[:env]).offset(1)
+      ).page(@pagination_page).per(@pagination_per_page)
+      
+      hero_entry = Spree::BlogEntry.visible(params[:env]).limit(1)
+      # combine to single collection
+      @blog_entries =  hero_entry + blog_entries
 
-       @has_more_pages = has_more
+
+      # pagination
+      next_page_count = Spree::BlogEntry.visible.page(@pagination_page+1).per(@pagination_per_page).offset(1).count
+      @has_more_pages = (next_page_count > 0 ? true : false)
+     
     end
 
     def show
@@ -46,24 +44,28 @@ module Spree
       @categories = Spree::BlogEntry.category_counts
     end
 
-    def category
-      if (params[:env] == 'stg')
-        @blog_entries = Spree::BlogEntry.visible_stg.by_category(params[:category]).page(@pagination_page).per(@pagination_per_page)
-        # pagination
-        next_page_count = Spree::BlogEntry.visible_stg.by_category(params[:category]).page(@pagination_page+1).per(@pagination_per_page).count
-        has_more = (next_page_count > 0 ? true : false)
-      else
-        @blog_entries = Spree::BlogEntry.visible.by_category(params[:category]).page(@pagination_page).per(@pagination_per_page)
-        # pagination
-        next_page_count = Spree::BlogEntry.visible.by_category(params[:category]).page(@pagination_page+1).per(@pagination_per_page).count
-        has_more = (next_page_count > 0 ? true : false)
-      end
+    def category  
 
+      #the posts - pagination must be by 9 for correct page layout  
+      blog_entries = Spree::BlogEntry.where(
+          :id => Spree::BlogEntry.visible(params[:env]).by_category(params[:category]).offset(1)
+      ).page(@pagination_page).per(@pagination_per_page)
+                  
+      hero_entry = Spree::BlogEntry.visible(params[:env]).by_category(params[:category]).limit(1)
+      # combine to single collection
+      @blog_entries =  hero_entry + blog_entries
+
+
+      # pagination
+      next_page_count = Spree::BlogEntry.visible.by_category(params[:category]).page(@pagination_page+1).per(@pagination_per_page).offset(1).count
+      @has_more_pages = (next_page_count > 0 ? true : false)
+
+ 
+      # category info
       @category_name = params[:category]
       unparameterized_name = @category_name.split("-").join(" ").humanize
       @category_object = ActsAsTaggableOn::Tag.named_like(unparameterized_name)
       
-      @has_more_pages = has_more
     end
 
     def archive
@@ -84,7 +86,7 @@ module Spree
 
       def init_pagination
         @pagination_page = params[:page].to_i > 0 ? params[:page].to_i : 1
-        @pagination_per_page = params[:per_page].to_i > 0 ? params[:per_page].to_i : 10
+        @pagination_per_page = params[:per_page].to_i > 0 ? params[:per_page].to_i : 9
       end
   end
 end
