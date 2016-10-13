@@ -18,7 +18,10 @@ module Spree
 
 
       # pagination
-      next_page_count = Spree::BlogEntry.visible.page(@pagination_page+1).per(@pagination_per_page).offset(1).count
+      next_page_count = Spree::BlogEntry.where(
+        :id => Spree::BlogEntry.visible(params[:env]).offset(1)
+      ).page(@pagination_page+1).per(@pagination_per_page).count
+
       @has_more_pages = (next_page_count > 0 ? true : false)
      
     end
@@ -57,7 +60,9 @@ module Spree
 
 
       # pagination
-      next_page_count = Spree::BlogEntry.visible.by_category(params[:category]).page(@pagination_page+1).per(@pagination_per_page).offset(1).count
+      next_page_count = Spree::BlogEntry.where(
+        :id => Spree::BlogEntry.visible(params[:env]).by_category(params[:category]).offset(1)
+      ).page(@pagination_page+1).per(@pagination_per_page).count
       @has_more_pages = (next_page_count > 0 ? true : false)
 
  
