@@ -1,0 +1,31 @@
+<div class="nested-fields sortable">
+  <%= f.hidden_field :layout, value: 'video_embed' %>
+  <%= f.hidden_field :position, class: 'position' %>
+
+  <div class="col-sm-12">
+    <div class="sort-handle collapse-show"><i class="icon icon-move"></i></div>
+    <h4>Video Embed</h4>
+    <span class="help-block">Supports Youtube and Vimeo.</span>
+  </div>
+
+  <div class="col-sm-12 collapse-hide has-warning">
+    <div class="form-group">
+      <%= f.cktext_area :body, class: 'form-control js-video-embed-code' %>
+      <span class="help-block"><strong>Heads up!</strong> This form will automatically strip any code except the first iframe to ensure a clean embed.</span>
+    </div>
+    <div class="form-group">
+      <div class="videowrapper">
+        <%== f.object.body %>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="col-sm-12 collapse-hide">
+    <%= link_to_remove_association "Remove Section", f %>
+  </div>
+
+  <div class="col-sm-12 clearfix bottom-border"></div>
+</div>
+
