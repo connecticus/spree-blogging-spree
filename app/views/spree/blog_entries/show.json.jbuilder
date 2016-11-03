@@ -2,6 +2,7 @@ json.set! :blog_entry do
   json.title @blog_entry.title
   json.cover_image_url @blog_entry.blog_entry_image ? asset_url(@blog_entry.blog_entry_image.attachment.url(:cover)) : nil
   json.grid_image_url @blog_entry.blog_entry_image ? asset_url(@blog_entry.blog_entry_image.attachment.url(:grid)) : nil
+  json.cover_video_embed_code @blog_entry.featured_video
   json.alt_text @blog_entry.blog_entry_image ? @blog_entry.blog_entry_image.alt : nil
   json.subtitle @blog_entry.subtitle
   json.byline markdown(@blog_entry.byline)
