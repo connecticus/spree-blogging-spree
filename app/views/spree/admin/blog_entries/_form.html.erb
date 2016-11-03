@@ -98,7 +98,7 @@
 
 <div class='row'>
   <div class="col-sm-12">
-    <%= field_set_tag Spree.t(:blog_entry_featured_image) %>
+    <%= field_set_tag Spree.t('Featured Image/Video') %>
   </div>
 
   <% @blog_entry.build_blog_entry_image unless @blog_entry.blog_entry_image %>
@@ -127,6 +127,29 @@
     </div>
 
   <% end %>
+
+</div>
+
+
+<div class='row'>
+
+  <div class="col-sm-12 collapse-hide has-warning">
+    <%= form.field_container :featured_video do %>
+      <div class="form-group">
+        <%= form.label :alt, Spree.t(:featured_video) %>
+
+        <%= form.cktext_area :featured_video, class: 'form-control js-video-embed-code' %>
+        <span class="help-block"><strong>Heads up!</strong> This form will automatically strip any code except the first iframe to ensure a clean embed. Supports Youtube and Vimeo.</span>
+      </div>
+      <div class="form-group js-video-container">
+        <% unless form.object.featured_video.blank? %>
+          <div class="videowrapper">
+            <%== form.object.featured_video %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 
 </div>
 
