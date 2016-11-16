@@ -33,7 +33,12 @@ module Spree
         @blog_entry = Spree::BlogEntry.visible.find_by_permalink!(params[:slug])
       end
       @title = @blog_entry.title
-      @more_blog_entries = Spree::BlogEntry.visible.published_after(@blog_entry.published_at).limit(9)
+
+      #the posts not including current context
+      @more_blog_entries = Spree::BlogEntry.visible(params[:env]).where.not(
+        :id => @blog_entry.id
+      ).limit(9)
+
       @previous_blog_entry = @more_blog_entries.first || Spree::BlogEntry.visible.first
       @next_blog_entry = Spree::BlogEntry.visible.published_before(@blog_entry.published_at).first || Spree::BlogEntry.visible.last
     end
