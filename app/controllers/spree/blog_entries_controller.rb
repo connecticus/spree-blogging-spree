@@ -39,8 +39,13 @@ module Spree
         :id => @blog_entry.id
       ).limit(9)
 
-      @previous_blog_entry = @more_blog_entries.first || Spree::BlogEntry.visible.first
-      @next_blog_entry = Spree::BlogEntry.visible.published_before(@blog_entry.published_at).first || Spree::BlogEntry.visible.last
+      #published_after and published_before methods don't work well because
+      #many posts may have exact same time stamp if published on same day
+      @posts = Spree::BlogEntry.visible
+      index = @posts.index(@blog_entry)
+
+      @previous_blog_entry = @posts[index-1] || Spree::BlogEntry.visible.last
+      @next_blog_entry = @posts[index+1] || Spree::BlogEntry.visible.first
     end
 
     def tag
