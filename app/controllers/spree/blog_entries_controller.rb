@@ -30,7 +30,7 @@ module Spree
       if try_spree_current_user.try(:has_spree_role?, "admin")
         @blog_entry = Spree::BlogEntry.find_by_permalink!(params[:slug])
       else
-        @blog_entry = Spree::BlogEntry.visible.find_by_permalink!(params[:slug])
+        @blog_entry = Spree::BlogEntry.visible(params[:env]).find_by_permalink!(params[:slug])
       end
       @title = @blog_entry.title
 
@@ -41,15 +41,15 @@ module Spree
 
       #published_after and published_before methods don't work well because
       #many posts may have exact same time stamp if published on same day
-      @posts = Spree::BlogEntry.visible
+      @posts = Spree::BlogEntry.visible(params[:env])
       index = @posts.index(@blog_entry)
-
-      @previous_blog_entry = @posts[index-1] || Spree::BlogEntry.visible.last
-      @next_blog_entry = @posts[index+1] || Spree::BlogEntry.visible.first
+      
+      @previous_blog_entry = @posts[index-1] || Spree::BlogEntry.visible(params[:env]).last
+      @next_blog_entry = @posts[index+1] || Spree::BlogEntry.visible(params[:env]).first
     end
 
     def tag
-      @blog_entries = Spree::BlogEntry.visible.by_tag(params[:tag]).page(@pagination_page).per(@pagination_per_page)
+      @blog_entries = Spree::BlogEntry.visible(params[:env]).by_tag(params[:tag]).page(@pagination_page).per(@pagination_per_page)
       @tag_name = params[:tag]
     end
 
@@ -84,17 +84,17 @@ module Spree
     end
 
     def archive
-      @blog_entries = Spree::BlogEntry.visible.by_date(params).page(@pagination_page).per(@pagination_per_page)
+      @blog_entries = Spree::BlogEntry.visible(params[:env]).by_date(params).page(@pagination_page).per(@pagination_per_page)
     end
 
     def feed
-      @blog_entries = Spree::BlogEntry.visible.limit(20)
+      @blog_entries = Spree::BlogEntry.visible(params[:env]).limit(20)
       render :layout => false
     end
 
     def author
       @author = Spree.user_class.where(:nickname => params[:author]).first
-      @blog_entries = Spree::BlogEntry.visible.by_author(@author).page(@pagination_page).per(@pagination_per_page)
+      @blog_entries = Spree::BlogEntry.visible(params[:env]).by_author(@author).page(@pagination_page).per(@pagination_per_page)
     end
 
     private
